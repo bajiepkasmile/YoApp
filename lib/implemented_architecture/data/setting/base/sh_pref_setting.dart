@@ -12,4 +12,7 @@ abstract class ShPrefSetting<TData> extends Setting<TData> {
   String get key;
 
   ShPrefSetting(this.prefs);
+
+  @override
+  Future<void> reset() => prefs.remove(key);
 }

@@ -18,6 +18,8 @@ abstract class Setting<TData> {
 
   TData get() => getInternal();
 
+  Future<void> reset();
+
   @protected
   Future<void> setInternal(TData data);
 
