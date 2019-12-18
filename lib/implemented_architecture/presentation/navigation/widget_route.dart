@@ -9,7 +9,7 @@ import '../../../architecture/presentation/navigation/route.dart' as Architectur
 import '../../../architecture/presentation/navigation/route_bundle.dart';
 import 'widget_container.dart';
 
-abstract class DefaultRoute<TAppScope extends Scope, TArg, TResult> extends Architecture.Route<TArg, TResult> {
+abstract class WidgetRoute<TAppScope extends Scope, TArg, TResult> extends Architecture.Route<TArg, TResult> {
 
   final BuildContext _context;
   final TAppScope _appScope;
@@ -17,7 +17,7 @@ abstract class DefaultRoute<TAppScope extends Scope, TArg, TResult> extends Arch
 
   Completer<TResult> _completer;
 
-  DefaultRoute(this._context, this._appScope, this._widgetContainer);
+  WidgetRoute(this._context, this._appScope, this._widgetContainer);
 
   @override
   Future<TResult> follow(TArg arg) {
