@@ -5,5 +5,5 @@ import '../../tools/mock/mock_data.dart';
 class ConfirmSignInOperation extends Operation<String, Profile> {
 
   @override
-  Future<Profile> execute(String smsCode) => Future.delayed(Duration(seconds: 2), () => MockData.selfProfile);
+  Future<Profile> execute(String smsCode) => Future.delayed(Duration(seconds: 5), () => MockData.selfProfile);
 }
