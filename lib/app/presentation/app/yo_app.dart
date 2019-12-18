@@ -11,6 +11,9 @@ class YoApp extends AppWidget<YoAppScope> {
   YoAppScope createScope(ScopeBundle<YoAppScope, void, void, ViewModel> bundle) => YoAppScope(bundle);
 
   @override
+  void onInit() => scope.onInitReaction.excite(null);
+
+  @override
   Widget build() =>
       MaterialApp(
         title: "Yo!",
