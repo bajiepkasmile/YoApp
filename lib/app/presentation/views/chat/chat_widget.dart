@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/operations/tools/mock/mock_data.dart';
+import '../../../../architecture/presentation/navigation/route_bundle.dart';
+import '../../../../implemented_architecture/presentation/scope/scope_bundle.dart';
+import '../../../../implemented_architecture/presentation/view/view_state.dart';
+import '../../../../implemented_architecture/presentation/view/view_widget.dart';
+import '../../../model/profile.dart';
 import '../../../model/message.dart';
+import '../../../model/message_status.dart';
+import '../../app/yo_app_scope.dart';
+import 'chat_model.dart';
+import 'chat_scope.dart';
 
-class ChatWidget extends StatelessWidget {
+class ChatWidget extends ViewWidget<YoAppScope, ChatScope, Profile, void, ChatModel> {
+
+  ChatWidget(RouteBundle<YoAppScope, Profile, void> routeBundle) : super(routeBundle);
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  ChatScope createScope(ScopeBundle<YoAppScope, Profile, void, ChatModel> bundle) => ChatScope(bundle);
+
+  @override
+  ChatModel createViewModel(ViewState state, Profile arg) => ChatModel(state, arg);
+
+  @override
+  void onInit() => scope.onInitReaction.excite(null);
+
+  @override
+  Widget build() => Scaffold(
     appBar: _buildAppBar(),
     floatingActionButton: _buildFab(),
     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -14,8 +33,11 @@ class ChatWidget extends StatelessWidget {
   );
 
   Widget _buildAppBar() => AppBar(
-    title: Text("Some Name", style: TextStyle(color: Colors.white),),
-    leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.white), onPressed: () => {}),
+    title: Text(model.contact.fullName, style: TextStyle(color: Colors.white),),
+    leading: IconButton(
+        icon: Icon(Icons.arrow_back, color: Colors.white),
+        onPressed: () => scope.onBackReaction.excite(null)
+    ),
     elevation: 8,
   );
 
@@ -23,13 +45,13 @@ class ChatWidget extends StatelessWidget {
     child: Text("Yo", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
     backgroundColor: Colors.grey,
     elevation: 4,
-    onPressed: () => {},
+    onPressed: () => scope.onSendMessageReaction.excite(null),
   );
 
   Widget _buildBody() {
-    if (true) {
+    if (model.messages == null) {
       return _buildLoading();
-    } else if (true) {
+    } else if (model.messages.isEmpty) {
       return _buildEmpty();
     } else {
       return _buildMessages();
@@ -51,7 +73,7 @@ class ChatWidget extends StatelessWidget {
 
   Widget _buildMessages() {
     final bodyWidgets = <Widget>[];
-    final messageWidgets = MockData.messages.map(_buildMessage).toList();
+    final messageWidgets = model.messages.map(_buildMessage).toList();
 
     bodyWidgets.add(Divider(height: 80, color: Colors.transparent));
     bodyWidgets.addAll(messageWidgets);
@@ -77,12 +99,25 @@ class ChatWidget extends StatelessWidget {
 
   Widget _buildOutMessage(Message message) => _buildParametrizedMessage(message, Colors.black12, MainAxisAlignment.end);
 
-  Widget _buildParametrizedMessage(Message message, Color backgroundColor, MainAxisAlignment alignment) =>
-      Row(
-        children: [_buildMessageCard(message, backgroundColor)],
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: alignment,
-      );
+  Widget _buildParametrizedMessage(Message message, Color backgroundColor, MainAxisAlignment alignment) {
+    final rowWidgets = <Widget>[];
+
+    if (message.status == MessageStatus.SENDING) {
+      rowWidgets.add(Icon(Icons.access_time, color: Colors.grey));
+    }
+
+    if (message.status == MessageStatus.FAILED) {
+      rowWidgets.add(Icon(Icons.error_outline, color: Colors.redAccent));
+    }
+
+    rowWidgets.add(_buildMessageCard(message, backgroundColor));
+
+    return Row(
+      children: rowWidgets,
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: alignment,
+    );
+  }
 
   Widget _buildMessageCard(Message message, Color backgroundColor) =>
       Card(
