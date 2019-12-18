@@ -15,5 +15,12 @@ class YoApp extends AppWidget<YoAppScope> {
       MaterialApp(
         title: "Yo!",
         home: scope.screenContainer.widget,
+        theme: ThemeData(
+            primaryColor: Colors.grey,
+            accentColor: Colors.grey,
+            textSelectionColor: Colors.black26,
+            textSelectionHandleColor: Colors.grey,
+            cursorColor: Colors.grey
+        ),
       );
 }
