@@ -20,21 +20,17 @@ class MockData {
   ];
 
   static final messages = [
-    Message("", "", MessageStatus.SENT, "Yo", true),
-    Message("", "", MessageStatus.SENT, "Yo", false),
-    Message("", "", MessageStatus.SENT, "Yo", true),
-    Message("", "", MessageStatus.SENT, "Yo", true),
-    Message("", "", MessageStatus.SENT, "Yo", false),
-    Message("", "", MessageStatus.SENT, "Yo", false),
-    Message("", "", MessageStatus.SENT, "Yo", true),
-    Message("", "", MessageStatus.SENT, "Yo", false),
-    Message("", "", MessageStatus.SENT, "Yo", true),
-    Message("", "", MessageStatus.SENT, "Yo", false),
-    Message("", "", MessageStatus.SENT, "Yo", true),
-    Message("", "", MessageStatus.FAILED, "Yo", true),
-    Message("", "", MessageStatus.FAILED, "Yo", true),
-    Message("", "", MessageStatus.SENDING, "Yo", true),
-    Message("", "", MessageStatus.SENDING, "Yo", true),
+    Message("", "", MessageStatus.SENT, "Yo", true, 0),
+    Message("", "", MessageStatus.SENT, "Yo", false, 0),
+    Message("", "", MessageStatus.SENT, "Yo", true, 0),
+    Message("", "", MessageStatus.SENT, "Yo", true, 0),
+    Message("", "", MessageStatus.SENT, "Yo", false, 0),
+    Message("", "", MessageStatus.SENT, "Yo", false, 0),
+    Message("", "", MessageStatus.SENT, "Yo", true, 0),
+    Message("", "", MessageStatus.SENT, "Yo", false, 0),
+    Message("", "", MessageStatus.SENT, "Yo", true, 0),
+    Message("", "", MessageStatus.SENT, "Yo", false, 0),
+    Message("", "", MessageStatus.SENT, "Yo", true, 0),
   ];
 
   static final _selfAvatarUrl = "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/19/19b952baf75c85034108858df0ce37c752a1a574_full.jpg";

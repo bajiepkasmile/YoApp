@@ -7,6 +7,7 @@ class Message {
   final MessageStatus status;
   final String text;
   final bool isOwner;
+  final timestamp;
 
-  Message(this.id, this.senderProfileId, this.status, this.text, this.isOwner);
+  Message(this.id, this.senderProfileId, this.status, this.text, this.isOwner, this.timestamp);
 }
