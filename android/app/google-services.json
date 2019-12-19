@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "206758855636",
+    "firebase_url": "https://yoapp-c3f13.firebaseio.com",
+    "project_id": "yoapp-c3f13",
+    "storage_bucket": "yoapp-c3f13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206758855636:android:ad9125f19a32b6995a4c41",
+        "android_client_info": {
+          "package_name": "com.example.yo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206758855636-g2m3j3tebtf61t55mnu7milqisjiol9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyNZixJgLb45GqFTqEd26CkRl4wDnRKtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206758855636-g2m3j3tebtf61t55mnu7milqisjiol9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
