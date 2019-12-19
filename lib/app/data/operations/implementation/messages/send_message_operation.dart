@@ -10,7 +10,7 @@ class SendMessageOperation extends Operation<SendMessageArg, Message> {
   Future<Message> execute(SendMessageArg arg) =>
       Future.delayed(
           Duration(seconds: 5),
-          () => Message("", arg.message.senderProfileId, MessageStatus.SENT, "Yo", true, arg.message.timestamp)
+          () => Message("", arg.message.senderProfileId, MessageStatus.sent, "Yo", true, arg.message.timestamp)
       );
 }
 

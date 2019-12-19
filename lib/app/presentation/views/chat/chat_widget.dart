@@ -102,11 +102,11 @@ class ChatWidget extends ViewWidget<YoAppScope, ChatScope, Profile, void, ChatMo
   Widget _buildParametrizedMessage(Message message, Color backgroundColor, MainAxisAlignment alignment) {
     final rowWidgets = <Widget>[];
 
-    if (message.status == MessageStatus.SENDING) {
+    if (message.status == MessageStatus.sending) {
       rowWidgets.add(Icon(Icons.access_time, color: Colors.grey));
     }
 
-    if (message.status == MessageStatus.FAILED) {
+    if (message.status == MessageStatus.failed) {
       rowWidgets.add(Icon(Icons.error_outline, color: Colors.redAccent));
     }
 

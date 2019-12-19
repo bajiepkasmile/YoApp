@@ -1,4 +1,4 @@
 enum MessageStatus {
 
-  SENDING, SENT, FAILED
+  sending, sent, failed
 }

@@ -27,7 +27,7 @@ class OnSendMessageReaction extends Reaction<void> {
   Message _createMessage() => Message(
       "",
       _contact.id,
-      MessageStatus.SENDING,
+      MessageStatus.sending,
       "Yo",
       true,
       DateTime.now().millisecondsSinceEpoch
