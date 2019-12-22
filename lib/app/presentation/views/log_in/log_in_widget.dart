@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../../flutter_utils/architecture/presentation/scope/scope_bundle.dart';
+import '../../../../flutter_utils/architecture/presentation/view/view_state.dart';
+import '../../../../flutter_utils/architecture/presentation/view/view_widget.dart';
 import '../../../../architecture/presentation/navigation/route_bundle.dart';
-import '../../../../implemented_architecture/presentation/scope/scope_bundle.dart';
-import '../../../../implemented_architecture/presentation/view/view_state.dart';
-import '../../../../implemented_architecture/presentation/view/view_widget.dart';
 import '../../app/yo_app_scope.dart';
 import 'log_in_model.dart';
 import 'log_in_scope.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../../flutter_utils/architecture/presentation/scope/scope_bundle.dart';
+import '../../../../flutter_utils/architecture/presentation/view/view_state.dart';
+import '../../../../flutter_utils/architecture/presentation/view/view_widget.dart';
 import '../../../../architecture/presentation/navigation/route_bundle.dart';
-import '../../../../implemented_architecture/presentation/scope/scope_bundle.dart';
-import '../../../../implemented_architecture/presentation/view/view_state.dart';
-import '../../../../implemented_architecture/presentation/view/view_widget.dart';
 import '../../../model/profile.dart';
 import '../../../model/message.dart';
 import '../../../model/message_status.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../flutter_utils/architecture/presentation/scope/scope_bundle.dart';
+import '../../../flutter_utils/architecture/presentation/view/app_widget.dart';
 import '../../../architecture/presentation/view/view_model.dart';
-import '../../../implemented_architecture/presentation/scope/scope_bundle.dart';
-import '../../../implemented_architecture/presentation/view/app_widget.dart';
 import 'yo_app_scope.dart';
 
 class YoApp extends AppWidget<YoAppScope> {

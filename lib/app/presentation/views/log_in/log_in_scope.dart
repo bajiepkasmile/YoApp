@@ -1,5 +1,5 @@
-import '../../../../implemented_architecture/presentation/scope/scope_bundle.dart';
-import '../../../../implemented_architecture/presentation/scope/widget_scope.dart';
+import '../../../../flutter_utils/architecture/presentation/scope/scope_bundle.dart';
+import '../../../../flutter_utils/architecture/presentation/scope/widget_scope.dart';
 import '../../app/yo_app_scope.dart';
 import 'reactions/on_phone_changed_reaction.dart';
 import 'reactions/on_phone_submitted_reaction.dart';
