@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../domain/event_emitter/event_emitter.dart';
+import '../emitter/emitter.dart';
 
 /// Настройка, сохраняющаяся при закрытии приложения.
 ///
@@ -9,20 +9,23 @@ import '../../domain/event_emitter/event_emitter.dart';
 /// единичным объектом.
 abstract class Setting<TData> {
 
-  final onChangedEventEmitter = EventEmitter<TData>();
+  final onChangedEmitter = Emitter<TData>();
 
   Future<void> set(TData data) async {
     await setInternal(data);
-    onChangedEventEmitter.emitEvent(data);
+    onChangedEmitter.emitEvent(data);
   }
 
-  TData get() => getInternal();
+  Future<TData> get() => getInternal();
 
-  Future<void> reset();
+  Future<void> reset() => resetInternal();
 
   @protected
   Future<void> setInternal(TData data);
 
   @protected
-  TData getInternal();
+  Future<TData> getInternal();
+
+  @protected
+  Future<void> resetInternal();
 }

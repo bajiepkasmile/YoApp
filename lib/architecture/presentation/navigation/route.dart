@@ -4,4 +4,6 @@ import 'route_trace.dart';
 abstract class Route<TArg, TResult> implements RouteTrace<TResult> {
 
   Future<TResult> follow(TArg arg);
+
+  Future<TResult> followReplacement(TArg arg);
 }

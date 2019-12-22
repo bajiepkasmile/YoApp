@@ -1,10 +1,10 @@
-import '../../domain/event_emitter/event_emitter.dart';
+import '../emitter/emitter.dart';
 
 /// Хранилище для данных в оперативной памяти. Используется для хранения общих для нескольких экранов данных.
 /// Например, профиль авторизованного пользователя.
 abstract class Repository<TData> {
   
-  final onChangedEventEmitter = EventEmitter<TData>();
+  final onChangedEmitter = Emitter<TData>();
 
   TData _data;
 
@@ -12,6 +12,6 @@ abstract class Repository<TData> {
 
   set data(TData data) {
     _data = data;
-    onChangedEventEmitter.emitEvent(data);
+    onChangedEmitter.emitEvent(data);
   }
 }

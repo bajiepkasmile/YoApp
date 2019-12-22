@@ -1,7 +1,7 @@
 import '../../presentation/reaction/reaction.dart';
 
 /// Излучатель непользовательских событий. Например, малый заряд батареи или новое сообщение от контакта.
-class EventEmitter<TArg> {
+class Emitter<TArg> {
 
   final _reactions = <Reaction<TArg>>[];
 
