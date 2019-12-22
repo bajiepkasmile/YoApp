@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 /// Базовый класс объектов Firestore.
 abstract class FirestoreObject {
+
   final String id;
 
   final DocumentReference _reference;
