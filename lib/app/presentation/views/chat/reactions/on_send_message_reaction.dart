@@ -37,7 +37,7 @@ class OnSendMessageReaction extends Reaction<void> {
 
   void _updateMessage(Message updatingMessage) {
     final messages = _chatModel.messages;
-    final messageIndex = messages.indexWhere((message) => message.timestamp == updatingMessage.timestamp);
+    final messageIndex = messages.indexWhere((message) => message.localTimestamp == updatingMessage.localTimestamp);
     messages.removeAt(messageIndex);
     messages.insert(messageIndex, updatingMessage);
   }
