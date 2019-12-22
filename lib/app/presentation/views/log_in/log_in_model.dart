@@ -4,9 +4,11 @@ import '../../../../flutter_utils/architecture/presentation/view/widget_model.da
 class LogInModel extends WidgetModel {
 
   bool isLoading = false;
-  bool isPhoneSubmitted = false;
   String phone = "";
   String smsCode = "";
+  String verificationId;
+
+  bool get isPhoneSubmitted => verificationId != null;
 
   LogInModel(ViewState viewState) : super(viewState);
 }
