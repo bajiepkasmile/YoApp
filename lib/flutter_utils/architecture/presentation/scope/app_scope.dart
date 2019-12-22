@@ -1,4 +1,4 @@
-import '../../../architecture/presentation/view/view_model.dart';
+import '../../../../architecture/presentation/view/view_model.dart';
 import '../navigation/widget_container.dart';
 import 'widget_scope.dart';
 import 'scope_bundle.dart';

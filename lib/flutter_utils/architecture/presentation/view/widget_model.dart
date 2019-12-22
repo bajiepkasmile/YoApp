@@ -1,4 +1,4 @@
-import '../../../architecture/presentation/view/view_model.dart';
+import '../../../../architecture/presentation/view/view_model.dart';
 import 'view_state.dart';
 
 class WidgetModel extends ViewModel {

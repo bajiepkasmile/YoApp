@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../architecture/presentation/navigation/route_bundle.dart';
-import '../../../architecture/presentation/view/view_model.dart';
+import '../../../../architecture/presentation/navigation/route_bundle.dart';
+import '../../../../architecture/presentation/view/view_model.dart';
 import '../scope/app_scope.dart';
 import '../scope/widget_scope.dart';
 import '../scope/scope_bundle.dart';

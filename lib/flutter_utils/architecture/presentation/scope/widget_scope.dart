@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../architecture/presentation/view/view_model.dart';
-import '../../../architecture/presentation/configurator/configurator.dart';
-import '../../../architecture/presentation/navigation/route_trace.dart';
-import '../../../architecture/presentation/scope/scope.dart';
+import '../../../../architecture/presentation/configurator/configurator.dart';
+import '../../../../architecture/presentation/navigation/route_trace.dart';
+import '../../../../architecture/presentation/scope/scope.dart';
+import '../../../../architecture/presentation/view/view_model.dart';
 import 'scope_bundle.dart';
 
 abstract class WidgetScope<TAppScope extends Scope, TArg, TResult, TViewModel extends ViewModel> extends Scope {

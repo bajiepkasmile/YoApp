@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../architecture/presentation/scope/scope.dart';
-import '../../../architecture/presentation/navigation/route.dart' as Architecture;
-import '../../../architecture/presentation/navigation/route_bundle.dart';
+import '../../../../architecture/presentation/scope/scope.dart';
+import '../../../../architecture/presentation/navigation/route.dart' as Architecture;
+import '../../../../architecture/presentation/navigation/route_bundle.dart';
 import 'widget_container.dart';
 
 abstract class WidgetRoute<TAppScope extends Scope, TArg, TResult> extends Architecture.Route<TArg, TResult> {
@@ -27,6 +27,17 @@ abstract class WidgetRoute<TAppScope extends Scope, TArg, TResult> extends Archi
       return _completer.future;
     } else {
       return Navigator.push(_context, _createNavigatorRoute(arg));
+    }
+  }
+
+  @override
+  Future<TResult> followReplacement(TArg arg) {
+    if (_widgetContainer != null) {
+      _completer = Completer<TResult>();
+      _widgetContainer.replace(_createBundledWidget(arg));
+      return _completer.future;
+    } else {
+      return Navigator.pushReplacement(_context, _createNavigatorRoute(arg));
     }
   }
 
