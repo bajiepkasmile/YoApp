@@ -10,16 +10,19 @@ import '../../../architecture/presentation/view/view_model.dart';
 import '../../data/operations/implementation/auth/verify_phone_operation.dart';
 import '../../data/operations/implementation/messages/get_remote_messages_operation.dart';
 import '../../data/operations/implementation/messages/send_message_operation.dart';
+import '../../data/operations/implementation/profiles/create_self_profile_operation.dart';
 import '../../data/repositories/self_profile_repository.dart';
 import '../../data/operations/implementation/auth/log_in_operation.dart';
 import '../../data/operations/implementation/profiles/get_remote_self_profile_operation.dart';
 import '../../data/operations/tools/firestore/firestore_entry.dart';
 import '../../data/operations/tools/firestore/profile/firestore_profile_mapper.dart';
 import '../../data/tasks/get_remote_self_profile_task.dart';
+import '../../data/tasks/create_self_profile_task.dart';
 import '../../data/tasks/log_in_task.dart';
 import '../../data/settings/self_profile_setting.dart';
 import '../../data/settings/log_in_info_setting.dart';
 import '../views/log_in/log_in_route.dart';
+import '../views/profile_creator/profile_creator_route.dart';
 import 'reactions/on_init_reaction.dart';
 
 class YoAppScope extends AppScope<YoAppScope> {
@@ -34,11 +37,13 @@ class YoAppScope extends AppScope<YoAppScope> {
 
   VerifyPhoneOperation verifyPhoneOperation;
   LogInOperation logInOperation;
+  CreateSelfProfileOperation createSelfProfileOperation;
   GetRemoteSelfProfileOperation getRemoteSelfProfileOperation;
   GetRemoteMessagesOperation getRemoteMessagesOperation;
   SendMessageOperation sendMessageOperation;
 
   LogInTask logInTask;
+  CreateSelfProfileTask createSelfProfileTask;
   GetRemoteSelfProfileTask getRemoteSelfProfileTask;
 
   SelfProfileRepository selfProfileRepository;
@@ -49,6 +54,7 @@ class YoAppScope extends AppScope<YoAppScope> {
   IsNetworkAvailableBox isNetworkAvailableBox;
 
   LogInRoute logInRoute;
+  ProfileCreatorRoute profileCreatorRoute;
 
   OnInitReaction onInitReaction;
 
@@ -63,11 +69,16 @@ class YoAppScope extends AppScope<YoAppScope> {
 
     verifyPhoneOperation = VerifyPhoneOperation(firebaseAuth);
     logInOperation = LogInOperation(firebaseAuth);
-    getRemoteSelfProfileOperation = GetRemoteSelfProfileOperation(firestoreEntry, uidSetting, firestoreProfileMapper);
+    getRemoteSelfProfileOperation = GetRemoteSelfProfileOperation(firestoreEntry, logInInfoSetting, firestoreProfileMapper);
     getRemoteMessagesOperation = GetRemoteMessagesOperation();
     sendMessageOperation = SendMessageOperation();
 
-    logInTask = LogInTask(logInOperation, uidSetting);
+    logInTask = LogInTask(logInOperation, logInInfoSetting);
+    createSelfProfileTask = CreateSelfProfileTask(
+        createSelfProfileOperation,
+        selfProfileSetting,
+        selfProfileRepository
+    );
     getRemoteSelfProfileTask = GetRemoteSelfProfileTask(
         getRemoteSelfProfileOperation,
         selfProfileSetting,
@@ -82,14 +93,16 @@ class YoAppScope extends AppScope<YoAppScope> {
     isNetworkAvailableBox = IsNetworkAvailableBox(connectivity);
 
     logInRoute = LogInRoute(context, this, screenContainer);
+    profileCreatorRoute = ProfileCreatorRoute(context, this, screenContainer);
 
     onInitReaction = OnInitReaction(
         selfProfileRepository,
         selfProfileSetting,
-        uidSetting,
+        logInInfoSetting,
         isNetworkAvailableBox,
         getRemoteSelfProfileTask,
-        logInRoute
+        logInRoute,
+        profileCreatorRoute
     );
   }
 }

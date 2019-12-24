@@ -5,6 +5,7 @@ import '../../../data/settings/self_profile_setting.dart';
 import '../../../data/settings/log_in_info_setting.dart';
 import '../../../data/tasks/get_remote_self_profile_task.dart';
 import '../../views/log_in/log_in_route.dart';
+import '../../views/profile_creator/profile_creator_route.dart';
 
 class OnInitReaction extends Reaction<void> {
 
@@ -14,6 +15,7 @@ class OnInitReaction extends Reaction<void> {
   final IsNetworkAvailableBox _isNetworkAvailableBox;
   final GetRemoteSelfProfileTask _getRemoteSelfProfileTask;
   final LogInRoute _logInRoute;
+  final ProfileCreatorRoute _profileCreatorRoute;
 
   OnInitReaction(
       this._selfProfileRepository,
@@ -21,7 +23,8 @@ class OnInitReaction extends Reaction<void> {
       this._logInInfoSetting,
       this._isNetworkAvailableBox,
       this._getRemoteSelfProfileTask,
-      this._logInRoute
+      this._logInRoute,
+      this._profileCreatorRoute
   );
 
   @override
@@ -46,11 +49,12 @@ class OnInitReaction extends Reaction<void> {
       return null;
     }
 
-    final profile = _getRemoteSelfProfileTask.execute(null);
+    final profile = await _getRemoteSelfProfileTask.execute(null);
     if (profile != null) {
       // TODO: ContactListRoute
-    } else {
-      // TODO: ProfileEditorRoute
+      return null;
     }
+
+    _profileCreatorRoute.follow(null);
   }
 }

@@ -1,6 +1,7 @@
 import '../../../../flutter_utils/architecture/presentation/scope/scope_bundle.dart';
 import '../../../../flutter_utils/architecture/presentation/scope/widget_scope.dart';
 import '../../app/yo_app_scope.dart';
+import '../profile_creator/profile_creator_route.dart';
 import 'reactions/common/log_in_common.dart';
 import 'reactions/on_phone_changed_reaction.dart';
 import 'reactions/on_phone_submitted_reaction.dart';
@@ -10,6 +11,7 @@ import 'log_in_model.dart';
 
 class LogInScope extends WidgetScope<YoAppScope, void, void, LogInModel> {
 
+  ProfileCreatorRoute profileCreatorRoute;
   LogInCommon logInCommon;
   OnPhoneChangedReaction onPhoneChangedReaction;
   OnPhoneSubmittedReaction onPhoneSubmittedReaction;
@@ -17,7 +19,8 @@ class LogInScope extends WidgetScope<YoAppScope, void, void, LogInModel> {
   OnSmsCodeSubmittedReaction onSmsCodeSubmittedReaction;
 
   LogInScope(ScopeBundle<YoAppScope, void, void, LogInModel> bundle) : super(bundle) {
-    logInCommon = LogInCommon(appScope.logInTask, appScope.getRemoteSelfProfileTask);
+    profileCreatorRoute = ProfileCreatorRoute(context, appScope, null);
+    logInCommon = LogInCommon(appScope.logInTask, appScope.getRemoteSelfProfileTask, profileCreatorRoute);
     onPhoneChangedReaction = OnPhoneChangedReaction(viewModel);
     onPhoneSubmittedReaction = OnPhoneSubmittedReaction(viewModel, appScope.verifyPhoneOperation, logInCommon);
     onSmsCodeChangedReaction = OnSmsCodeChangedReaction(viewModel);
