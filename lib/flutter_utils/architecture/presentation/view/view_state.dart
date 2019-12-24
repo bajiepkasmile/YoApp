@@ -5,6 +5,7 @@ import '../../../../architecture/presentation/view/view_model.dart';
 import '../scope/app_scope.dart';
 import '../scope/widget_scope.dart';
 import '../scope/scope_bundle.dart';
+import 'widget_model_bundle.dart';
 import 'view_widget.dart';
 
 class ViewState<
@@ -32,21 +33,22 @@ class ViewState<
     super.initState();
     widget.stateContainer.state = this;
     scope = _createScope();
-    scope.configurator?.configure();
+    scope.onConfigure();
     widget.onInit();
   }
 
   @override
   void dispose() {
     widget.onDispose();
-    scope.configurator?.deconfigure();
+    scope.onDeconfigure();
     super.dispose();
   }
 
   void rebuild() => setState(() {});
 
   TScope _createScope() {
-    final viewModel = widget.createViewModel(this, _routeBundle.arg);
+    final modelBundle = WidgetModelBundle<TArg>(_routeBundle.arg, this);
+    final viewModel = widget.createViewModel(modelBundle);
     final scopeBundle = ScopeBundle<TAppScope, TArg, TResult, TViewModel>(context, viewModel, _routeBundle);
     return widget.createScope(scopeBundle);
   }

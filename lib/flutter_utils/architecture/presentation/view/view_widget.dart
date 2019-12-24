@@ -6,6 +6,7 @@ import '../scope/app_scope.dart';
 import '../scope/widget_scope.dart';
 import '../scope/scope_bundle.dart';
 import 'state_container.dart';
+import 'widget_model_bundle.dart';
 import 'view_state.dart';
 
 abstract class ViewWidget<
@@ -30,7 +31,7 @@ abstract class ViewWidget<
 
   TScope createScope(ScopeBundle<TAppScope, TArg, TResult, TViewModel> bundle);
 
-  TViewModel createViewModel(ViewState state, TArg arg);
+  TViewModel createViewModel(WidgetModelBundle<TArg> bundle);
 
   Widget build();
 
