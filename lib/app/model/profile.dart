@@ -3,7 +3,7 @@ class Profile {
   final String id;
   final String phone;
   final String avatarUrl;
-  final String fullName;
+  final String name;
 
-  Profile(this.id, this.phone, this.avatarUrl, this.fullName);
+  Profile(this.id, this.phone, this.avatarUrl, this.name);
 }

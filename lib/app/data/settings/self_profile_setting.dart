@@ -36,7 +36,7 @@ class SelfProfileSetting extends Setting<Profile> {
     await prefs.setString(_ID_KEY, profile.id);
     await prefs.setString(_PHONE_KEY, profile.phone);
     await prefs.setString(_AVATAR_URL_KEY, profile.avatarUrl);
-    await prefs.setString(_FULL_NAME_KEY, profile.fullName);
+    await prefs.setString(_FULL_NAME_KEY, profile.name);
   }
 
   @override
@@ -47,6 +47,4 @@ class SelfProfileSetting extends Setting<Profile> {
     await prefs.remove(_AVATAR_URL_KEY);
     await prefs.remove(_FULL_NAME_KEY);
   }
-
-
 }

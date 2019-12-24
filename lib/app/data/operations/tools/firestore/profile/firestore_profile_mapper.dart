@@ -15,6 +15,6 @@ class FirestoreProfileMapper {
       uid,
       profile.phone,
       profile.avatarUrl,
-      profile.fullName
+      profile.name
   );
 }
