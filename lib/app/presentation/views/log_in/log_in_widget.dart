@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../../flutter_utils/architecture/presentation/scope/scope_bundle.dart';
-import '../../../../flutter_utils/architecture/presentation/view/view_state.dart';
+import '../../../../flutter_utils/architecture/presentation/view/widget_model_bundle.dart';
 import '../../../../flutter_utils/architecture/presentation/view/view_widget.dart';
 import '../../../../architecture/presentation/navigation/route_bundle.dart';
 import '../../app/yo_app_scope.dart';
@@ -17,7 +17,7 @@ class LogInWidget extends ViewWidget<YoAppScope, LogInScope, void, void, LogInMo
   LogInScope createScope(ScopeBundle<YoAppScope, void, void, LogInModel> bundle) => LogInScope(bundle);
 
   @override
-  LogInModel createViewModel(ViewState state, void arg) => LogInModel(state);
+  LogInModel createViewModel(WidgetModelBundle<void> bundle) => LogInModel(bundle);
 
   @override
   Widget build() => Material(child: _buildCenteredBody());

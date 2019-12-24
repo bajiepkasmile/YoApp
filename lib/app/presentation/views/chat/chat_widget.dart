@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../flutter_utils/architecture/presentation/scope/scope_bundle.dart';
-import '../../../../flutter_utils/architecture/presentation/view/view_state.dart';
+import '../../../../flutter_utils/architecture/presentation/view/widget_model_bundle.dart';
 import '../../../../flutter_utils/architecture/presentation/view/view_widget.dart';
 import '../../../../architecture/presentation/navigation/route_bundle.dart';
 import '../../../model/profile.dart';
@@ -19,7 +19,7 @@ class ChatWidget extends ViewWidget<YoAppScope, ChatScope, Profile, void, ChatMo
   ChatScope createScope(ScopeBundle<YoAppScope, Profile, void, ChatModel> bundle) => ChatScope(bundle);
 
   @override
-  ChatModel createViewModel(ViewState state, Profile arg) => ChatModel(state, arg);
+  ChatModel createViewModel(WidgetModelBundle<Profile> bundle) => ChatModel(bundle);
 
   @override
   void onInit() => scope.onInitReaction.excite(null);
@@ -33,7 +33,7 @@ class ChatWidget extends ViewWidget<YoAppScope, ChatScope, Profile, void, ChatMo
   );
 
   Widget _buildAppBar() => AppBar(
-    title: Text(model.contact.fullName, style: TextStyle(color: Colors.white),),
+    title: Text(model.arg.name, style: TextStyle(color: Colors.white),),
     leading: IconButton(
         icon: Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () => scope.onBackReaction.excite(null)

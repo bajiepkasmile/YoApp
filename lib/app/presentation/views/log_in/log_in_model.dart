@@ -1,7 +1,7 @@
-import '../../../../flutter_utils/architecture/presentation/view/view_state.dart';
+import '../../../../flutter_utils/architecture/presentation/view/widget_model_bundle.dart';
 import '../../../../flutter_utils/architecture/presentation/view/widget_model.dart';
 
-class LogInModel extends WidgetModel {
+class LogInModel extends WidgetModel<void> {
 
   bool isLoading = false;
   String phone = "";
@@ -10,5 +10,5 @@ class LogInModel extends WidgetModel {
 
   bool get isPhoneSubmitted => verificationId != null;
 
-  LogInModel(ViewState viewState) : super(viewState);
+  LogInModel(WidgetModelBundle<void> bundle) : super(bundle);
 }

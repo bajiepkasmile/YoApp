@@ -15,6 +15,11 @@ class GetRemoteSelfProfileTask extends Task<void, Profile> {
   @override
   Future<Profile> createTaskFuture(void arg) async{
     final profile = await _getRemoteSelfProfileOperation.execute(null);
+
+    if (profile == null) {
+      return null;
+    }
+
     await _selfProfileSetting.set(profile);
     _selfProfileRepository.data = profile;
     return profile;
