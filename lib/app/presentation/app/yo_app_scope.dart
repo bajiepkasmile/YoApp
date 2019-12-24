@@ -18,7 +18,7 @@ import '../../data/operations/tools/firestore/profile/firestore_profile_mapper.d
 import '../../data/tasks/get_remote_self_profile_task.dart';
 import '../../data/tasks/log_in_task.dart';
 import '../../data/settings/self_profile_setting.dart';
-import '../../data/settings/uid_setting.dart';
+import '../../data/settings/log_in_info_setting.dart';
 import '../views/log_in/log_in_route.dart';
 import 'reactions/on_init_reaction.dart';
 
@@ -44,7 +44,7 @@ class YoAppScope extends AppScope<YoAppScope> {
   SelfProfileRepository selfProfileRepository;
 
   SelfProfileSetting selfProfileSetting;
-  UidSetting uidSetting;
+  LogInInfoSetting logInInfoSetting;
 
   IsNetworkAvailableBox isNetworkAvailableBox;
 
@@ -77,7 +77,7 @@ class YoAppScope extends AppScope<YoAppScope> {
     selfProfileRepository = SelfProfileRepository();
 
     selfProfileSetting = SelfProfileSetting(prefsFuture);
-    uidSetting = UidSetting(prefsFuture);
+    logInInfoSetting = LogInInfoSetting(prefsFuture);
 
     isNetworkAvailableBox = IsNetworkAvailableBox(connectivity);
 

@@ -2,7 +2,7 @@ import '../../../../connectivity_utils/architecture/data/box/is_network_availabl
 import '../../../../architecture/presentation/reaction/reaction.dart';
 import '../../../data/repositories/self_profile_repository.dart';
 import '../../../data/settings/self_profile_setting.dart';
-import '../../../data/settings/uid_setting.dart';
+import '../../../data/settings/log_in_info_setting.dart';
 import '../../../data/tasks/get_remote_self_profile_task.dart';
 import '../../views/log_in/log_in_route.dart';
 
@@ -10,7 +10,7 @@ class OnInitReaction extends Reaction<void> {
 
   final SelfProfileRepository _selfProfileRepository;
   final SelfProfileSetting _selfProfileSetting;
-  final UidSetting _uidSetting;
+  final LogInInfoSetting _logInInfoSetting;
   final IsNetworkAvailableBox _isNetworkAvailableBox;
   final GetRemoteSelfProfileTask _getRemoteSelfProfileTask;
   final LogInRoute _logInRoute;
@@ -18,7 +18,7 @@ class OnInitReaction extends Reaction<void> {
   OnInitReaction(
       this._selfProfileRepository,
       this._selfProfileSetting,
-      this._uidSetting,
+      this._logInInfoSetting,
       this._isNetworkAvailableBox,
       this._getRemoteSelfProfileTask,
       this._logInRoute
@@ -34,7 +34,7 @@ class OnInitReaction extends Reaction<void> {
       return null;
     }
 
-    final cachedUid = _uidSetting.get();
+    final cachedUid = await _logInInfoSetting.get();
     if (cachedUid == null) {
       _logInRoute.follow(null);
       return null;
