@@ -7,6 +7,7 @@ import '../../../connectivity_utils/architecture/data/box/is_network_available_b
 import '../../../flutter_utils/architecture/presentation/scope/app_scope.dart';
 import '../../../flutter_utils/architecture/presentation/scope/scope_bundle.dart';
 import '../../../architecture/presentation/view/view_model.dart';
+import '../../data/emitters/on_receive_message_emitter.dart';
 import '../../data/operations/tools/firestore/message/firestore_message_mapper.dart';
 import '../../data/operations/implementation/auth/verify_phone_operation.dart';
 import '../../data/operations/implementation/messages/get_remote_messages_operation.dart';
@@ -46,6 +47,8 @@ class YoAppScope extends AppScope<YoAppScope> {
   FirestoreProfileMapper firestoreProfileMapper;
   FirestoreMessageMapper firestoreMessageMapper;
 
+  OnReceiveMessageEmitter onReceiveMessageEmitter;
+
   VerifyPhoneOperation verifyPhoneOperation;
   LogInOperation logInOperation;
   CreateProfileOperation createProfileOperation;
@@ -80,6 +83,8 @@ class YoAppScope extends AppScope<YoAppScope> {
     firestoreEntry = FirestoreEntry(firestore);
     firestoreProfileMapper = FirestoreProfileMapper();
     firestoreMessageMapper = FirestoreMessageMapper(selfProfileRepository);
+
+    onReceiveMessageEmitter = OnReceiveMessageEmitter(firestoreEntry, firestoreMessageMapper, selfProfileRepository);
 
     verifyPhoneOperation = VerifyPhoneOperation(firebaseAuth);
     logInOperation = LogInOperation(firebaseAuth);
