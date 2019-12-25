@@ -1,10 +1,10 @@
 import '../../../../../../architecture/common/async_common.dart';
 import '../../../../../data/operations/implementation/auth/log_in_operation.dart';
-import '../../../../../data/tasks/get_remote_self_profile_task.dart';
-import '../../../../../data/tasks/log_in_task.dart';
+import '../../../../../data/tasks/profiles/get_remote_self_profile_task.dart';
+import '../../../../../data/tasks/auth/log_in_task.dart';
 import '../../../profile_creator/profile_creator_route.dart';
 
-class LogInCommon extends AsyncCommon<LogInArg, void> {
+class LogInCommon extends AsyncCommon<LogInOperationArg, void> {
 
   final LogInTask _logInTask;
   final GetRemoteSelfProfileTask _getRemoteSelfProfileTask;
@@ -13,7 +13,7 @@ class LogInCommon extends AsyncCommon<LogInArg, void> {
   LogInCommon(this._logInTask, this._getRemoteSelfProfileTask, this._profileCreatorRoute);
 
   @override
-  Future<void> call(LogInArg arg) async {
+  Future<void> call(LogInOperationArg arg) async {
     await _logInTask.execute(arg);
     final selfProfile = await _getRemoteSelfProfileTask.execute(null);
     if (selfProfile != null) {

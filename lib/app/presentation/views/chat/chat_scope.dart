@@ -14,8 +14,8 @@ class ChatScope extends WidgetScope<YoAppScope, Profile, void, ChatModel> {
   OnSendMessageReaction onSendMessageReaction;
 
   ChatScope(ScopeBundle<YoAppScope, Profile, void, ChatModel> bundle) : super(bundle) {
-    onInitReaction = OnInitReaction(arg, viewModel, appScope.getRemoteMessagesOperation);
+    onInitReaction = OnInitReaction(viewModel, appScope.getRemoteMessagesTask);
     onBackReaction = OnBackReaction(trace);
-    onSendMessageReaction = OnSendMessageReaction(arg, viewModel, appScope.sendMessageOperation);
+    onSendMessageReaction = OnSendMessageReaction(viewModel, appScope.sendMessageTask);
   }
 }

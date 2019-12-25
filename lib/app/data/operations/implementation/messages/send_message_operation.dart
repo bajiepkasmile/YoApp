@@ -1,23 +1,28 @@
-import 'package:yo_app/app/model/message_status.dart';
-
 import '../../../../../architecture/data/operation/operation.dart';
 import '../../../../model/message.dart';
-import '../../../../model/profile.dart';
+import '../../tools/firestore/firestore_entry.dart';
+import '../../tools/firestore/message/firestore_message.dart';
+import '../../tools/firestore/message/firestore_message_mapper.dart';
 
-class SendMessageOperation extends Operation<SendMessageArg, Message> {
-  
+class SendMessageOperation extends Operation<SendMessageOperationArg, Message> {
+
+  final FirestoreEntry _firestoreEntry;
+  final FirestoreMessageMapper _mapper;
+
+  SendMessageOperation(this._firestoreEntry, this._mapper);
+
   @override
-  Future<Message> execute(SendMessageArg arg) =>
-      Future.delayed(
-          Duration(seconds: 5),
-          () => Message("", arg.message.senderProfileId, MessageStatus.sent, "Yo", true, arg.message.localTimestamp)
-      );
+  Future<Message> execute(SendMessageOperationArg arg) async {
+    final sendingFirestoreMessage = FirestoreMessage(null, arg.senderProfileId, arg.receiverProfileId);
+    final createdFirestoreMessage = await _firestoreEntry.messages.add(sendingFirestoreMessage);
+    return _mapper.toMessage(createdFirestoreMessage);
+  }
 }
 
-class SendMessageArg {
+class SendMessageOperationArg {
 
-  final Profile contact;
-  final Message message;
+  final senderProfileId;
+  final receiverProfileId;
 
-  SendMessageArg(this.contact, this.message);
+  SendMessageOperationArg(this.senderProfileId, this.receiverProfileId);
 }

@@ -4,24 +4,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../../architecture/data/operation/operation.dart';
 
-class VerifyPhoneOperation extends Operation<String, VerifyPhoneResult> {
+class VerifyPhoneOperation extends Operation<String, VerifyPhoneOperationResult> {
 
   final FirebaseAuth _firebaseAuth;
 
   VerifyPhoneOperation(this._firebaseAuth);
 
   @override
-  Future<VerifyPhoneResult> execute(String phone) {
-    final completer = Completer<VerifyPhoneResult>();
+  Future<VerifyPhoneOperationResult> execute(String phone) {
+    final completer = Completer<VerifyPhoneOperationResult>();
 
     _firebaseAuth.verifyPhoneNumber(
       phoneNumber: phone,
       timeout: Duration(seconds: 60),
       verificationCompleted: (authCredential) =>
-          completer.complete(VerifyPhoneResult(authCredential: authCredential)),
+          completer.complete(VerifyPhoneOperationResult(authCredential: authCredential)),
       verificationFailed: (exception) => completer.completeError(exception),
       codeSent: (verificationId, [forceResendingToken]) =>
-          completer.complete(VerifyPhoneResult(verificationId: verificationId)),
+          completer.complete(VerifyPhoneOperationResult(verificationId: verificationId)),
       codeAutoRetrievalTimeout: null,
     );
 
@@ -29,10 +29,10 @@ class VerifyPhoneOperation extends Operation<String, VerifyPhoneResult> {
   }
 }
 
-class VerifyPhoneResult {
+class VerifyPhoneOperationResult {
 
   final AuthCredential authCredential;
   final String verificationId;
 
-  VerifyPhoneResult({ this.authCredential, this.verificationId });
+  VerifyPhoneOperationResult({ this.authCredential, this.verificationId });
 }

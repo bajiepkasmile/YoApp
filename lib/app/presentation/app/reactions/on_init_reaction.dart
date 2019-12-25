@@ -3,7 +3,7 @@ import '../../../../architecture/presentation/reaction/reaction.dart';
 import '../../../data/repositories/self_profile_repository.dart';
 import '../../../data/settings/self_profile_setting.dart';
 import '../../../data/settings/log_in_info_setting.dart';
-import '../../../data/tasks/get_remote_self_profile_task.dart';
+import '../../../data/tasks/profiles/get_remote_self_profile_task.dart';
 import '../../views/log_in/log_in_route.dart';
 import '../../views/profile_creator/profile_creator_route.dart';
 

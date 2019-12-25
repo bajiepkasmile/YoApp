@@ -15,7 +15,7 @@ class OnSmsCodeSubmittedReaction extends Reaction<void> {
     _logInModel.isLoading = true;
     _logInModel.refresh();
 
-    final logInArg = LogInArg.fromVerificationIdAndSmsCode(_logInModel.verificationId, _logInModel.smsCode);
+    final logInArg = LogInOperationArg.fromVerificationIdAndSmsCode(_logInModel.verificationId, _logInModel.smsCode);
     await _logInCommon.call(logInArg);
   }
 }

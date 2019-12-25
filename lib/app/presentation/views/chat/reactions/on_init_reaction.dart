@@ -1,19 +1,17 @@
 import '../../../../../architecture/presentation/reaction/reaction.dart';
-import '../../../../data/operations/implementation/messages/get_remote_messages_operation.dart';
-import '../../../../model/profile.dart';
+import '../../../../data/tasks/messages/get_remote_messages_task.dart';
 import '../chat_model.dart';
 
 class OnInitReaction extends Reaction<void> {
 
-  final Profile _contact;
   final ChatModel _chatModel;
-  final GetRemoteMessagesOperation _getRemoteMessagesOperation;
+  final GetRemoteMessagesTask _getRemoteMessagesTask;
 
-  OnInitReaction(this._contact, this._chatModel, this._getRemoteMessagesOperation);
+  OnInitReaction(this._chatModel, this._getRemoteMessagesTask);
 
   @override
   void excite(void arg) async {
-    _chatModel.messages = await _getRemoteMessagesOperation.execute(_contact.id);
+    _chatModel.messages = await _getRemoteMessagesTask.execute(_chatModel.arg.id);
     _chatModel.refresh();
   }
 }

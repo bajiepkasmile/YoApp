@@ -1,7 +1,7 @@
-import '../../../architecture/data/task/task.dart';
-import '../operations/implementation/auth/log_out_operation.dart';
-import '../settings/self_profile_setting.dart';
-import '../settings/log_in_info_setting.dart';
+import '../../../../architecture/data/task/task.dart';
+import '../../operations/implementation/auth/log_out_operation.dart';
+import '../../settings/self_profile_setting.dart';
+import '../../settings/log_in_info_setting.dart';
 
 class LogOutTask extends Task<void, void> {
 

@@ -19,7 +19,7 @@ class OnPhoneSubmittedReaction extends Reaction<void> {
 
     final result = await _verifyPhoneOperation.execute(_logInModel.phone);
     if (result.authCredential != null) {
-      final logInArg = LogInArg.fromAuthCredential(result.authCredential);
+      final logInArg = LogInOperationArg.fromAuthCredential(result.authCredential);
       await _logInCommon.call(logInArg);
     } else {
       _logInModel.isLoading = false;

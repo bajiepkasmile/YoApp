@@ -1,7 +1,6 @@
-import 'package:yo_app/app/data/settings/log_in_info_setting.dart';
-
 import '../../../../../architecture/presentation/reaction/reaction.dart';
-import '../../../../data/tasks/create_self_profile_task.dart';
+import '../../../../data/settings/log_in_info_setting.dart';
+import '../../../../data/tasks/profiles/create_self_profile_task.dart';
 import '../profile_creator_model.dart';
 
 class OnNameSubmittedReaction extends Reaction<void> {
@@ -18,7 +17,7 @@ class OnNameSubmittedReaction extends Reaction<void> {
     _model.refresh();
 
     final logInInfo = await _logInInfoSetting.get();
-    final arg = CreateSelfProfileArg(logInInfo.phone, _model.name);
+    final arg = CreateSelfProfileTaskArg(logInInfo.phone, _model.name);
     await _createSelfProfileTask.execute(arg);
     //TODO: follow replacement ContactListRoute
   }

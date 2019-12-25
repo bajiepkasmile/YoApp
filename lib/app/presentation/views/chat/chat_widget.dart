@@ -128,7 +128,7 @@ class ChatWidget extends ViewWidget<YoAppScope, ChatScope, Profile, void, ChatMo
 
   Widget _buildMessageContainer(Message message, Color backgroundColor) =>
       Container(
-        child: Text(message.text, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        child: Text("Yo", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
         padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
         color: backgroundColor,
       );

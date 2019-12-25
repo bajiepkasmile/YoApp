@@ -4,10 +4,9 @@ class Message {
 
   final String id;
   final String senderProfileId;
+  final String receiverProfileId;
   final MessageStatus status;
-  final String text;
   final bool isOwner;
-  final localTimestamp;
 
-  Message(this.id, this.senderProfileId, this.status, this.text, this.isOwner, this.localTimestamp);
+  Message(this.id, this.senderProfileId, this.receiverProfileId, this.status, this.isOwner);
 }
