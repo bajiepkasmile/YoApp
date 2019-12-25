@@ -2,31 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'docunent_snapshot_map_function.dart';
 import 'firestore_object.dart';
-import 'firestore_query.dart';
 
-/// Представление коллекции в Firestore.
-class FirestoreCollection<TItem extends FirestoreObject> {
+class FirestoreQuery<TItem extends FirestoreObject> {
 
-  final CollectionReference reference;
+  final Query _query;
   final DocumentSnapshotMapFunction<TItem> _mapFunction;
 
-  FirestoreCollection(this.reference, this._mapFunction);
-
-  Future<TItem> load(String id) async {
-    final documentSnapshot = await reference.document(id).get();
-    return _mapFunction(documentSnapshot);
-  }
+  FirestoreQuery(this._query, this._mapFunction);
 
   Future<List<TItem>> loadAll() async {
-    final querySnapshot = await reference.getDocuments();
+    final querySnapshot = await _query.getDocuments();
     return querySnapshot.documents.map(_mapFunction).toList();
-  }
-
-  Future<TItem> add(TItem item) async {
-    final map = item.toMap();
-    final documentReference = await reference.add(map);
-    final documentSnapshot = await documentReference.get();
-    return _mapFunction(documentSnapshot);
   }
 
   FirestoreQuery<TItem> where(
@@ -42,8 +28,8 @@ class FirestoreCollection<TItem extends FirestoreObject> {
         List<dynamic> whereIn,
         bool isNull,
       }
-  ) {
-    final query = reference.where(
+      ) {
+    final query = _query.where(
         field,
         isEqualTo: isEqualTo,
         isLessThan: isLessThan,
@@ -55,6 +41,6 @@ class FirestoreCollection<TItem extends FirestoreObject> {
         whereIn: whereIn,
         isNull: isNull
     );
-    return FirestoreQuery<TItem>(query, _mapFunction);
+    return FirestoreQuery(query, _mapFunction);
   }
 }
