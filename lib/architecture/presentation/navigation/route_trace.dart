@@ -1,5 +1,5 @@
 /// Служит для выхода с текущей вью.
-abstract class RouteTrace<TResult> {
+class RouteTrace<TResult> {
 
-  void comeBack(TResult result);
+  void pop(TResult result) => throw UnsupportedError("");
 }

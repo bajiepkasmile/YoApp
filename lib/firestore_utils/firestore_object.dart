@@ -18,14 +18,14 @@ abstract class FirestoreObject {
   ;
 
   Map<String, dynamic> toMap() {
-    final map = {};
+    final map = <String, dynamic>{};
     addFieldsToMap(map);
     return map;
   }
 
-  Future<void> update() => _reference.updateData(toMap());
+  Future<void> update() => _reference?.updateData(toMap()) ?? Future.value();
 
-  Future<void> delete() => _reference.delete();
+  Future<void> delete() => _reference?.delete() ?? Future.value();
 
   @protected
   void addFieldsToMap(Map<String, dynamic> map);

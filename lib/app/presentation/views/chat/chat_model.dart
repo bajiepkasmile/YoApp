@@ -1,11 +1,11 @@
+import 'package:yo_app/app/models/chat.dart';
+
 import '../../../../flutter_utils/architecture/presentation/view/widget_model_bundle.dart';
 import '../../../../flutter_utils/architecture/presentation/view/widget_model.dart';
-import '../../../model/message.dart';
-import '../../../model/profile.dart';
+import '../../../models/profile.dart';
 
-class ChatModel extends WidgetModel<Profile> {
+class ChatModel extends WidgetModel<Chat> {
   
-  List<Message> messages;
 
-  ChatModel(WidgetModelBundle<Profile> bundle) : super(bundle);
+  ChatModel(WidgetModelBundle<Chat> bundle) : super(bundle);
 }

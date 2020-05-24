@@ -4,7 +4,7 @@ import '../../../../architecture/presentation/navigation/route_bundle.dart';
 import '../../../../architecture/presentation/scope/scope.dart';
 import '../../../../architecture/presentation/view/view_model.dart';
 
-class ScopeBundle<TAppScope extends Scope, TArg, TResult, TViewModel extends ViewModel> {
+class ScopeBundle<TAppScope extends Scope, TViewModel extends ViewModel, TArg, TResult> {
 
   final BuildContext context;
   final ViewModel viewModel;

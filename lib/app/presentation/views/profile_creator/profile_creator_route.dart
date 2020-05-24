@@ -1,19 +1,15 @@
 import 'package:flutter/widgets.dart';
 
+import '../../../../flutter_utils/architecture/presentation/navigation/target_route.dart';
+import '../../../../flutter_utils/architecture/presentation/navigation/targets/target.dart';
 import '../../../../architecture/presentation/navigation/route_bundle.dart';
-import '../../../../flutter_utils/architecture/presentation/navigation/widget_container.dart';
-import '../../../../flutter_utils/architecture/presentation/navigation/widget_route.dart';
 import '../../app/yo_app_scope.dart';
-import 'profile_creator_widget.dart';
+import 'profile_creator_state.dart';
 
-class ProfileCreatorRoute extends WidgetRoute<YoAppScope, void, void> {
+class ProfileCreatorRoute extends TargetRoute<YoAppScope, void, void> {
 
-  ProfileCreatorRoute(
-      BuildContext context,
-      YoAppScope appScope,
-      WidgetContainer widgetContainer
-  ) : super(context, appScope, widgetContainer);
+  ProfileCreatorRoute(YoAppScope appScope, Target target) : super(appScope, target);
 
   @override
-  Widget createWidget(RouteBundle<YoAppScope, void, void> bundle) => ProfileCreatorWidget(bundle);
+  State<StatefulWidget> createState(RouteBundle<YoAppScope, void, void> bundle) => ProfileCreatorState(bundle);
 }

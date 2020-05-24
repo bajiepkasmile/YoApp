@@ -10,11 +10,12 @@ abstract class Task<TArg, TResult> {
   final _argToFutureCountMap = <TArg, int>{};
 
   Future<TResult> execute(TArg arg) {
+    _argToFutureCountMap[arg] ??= 0;
     _argToFutureCountMap[arg]++;
     return createAndConfigureTaskFuture(arg);
   }
 
-  bool isExecuting(TArg arg) => _argToFutureCountMap[arg] == 0;
+  bool isExecuting(TArg arg) => _argToFutureCountMap[arg] != 0;
 
   @protected
   Future<TResult> createAndConfigureTaskFuture(TArg arg) async {
@@ -26,6 +27,7 @@ abstract class Task<TArg, TResult> {
     } catch (exception) {
       _argToFutureCountMap[arg]--;
       onErrorEmitter.emitEvent(exception);
+      rethrow;
     }
   }
 

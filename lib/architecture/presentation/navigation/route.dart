@@ -1,9 +1,9 @@
 import 'route_trace.dart';
 
 /// Абстракция для открытия новой вью.
-abstract class Route<TArg, TResult> implements RouteTrace<TResult> {
+class Route<TArg, TResult> extends RouteTrace<TResult> {
 
-  Future<TResult> follow(TArg arg);
+  Future<TResult> add(TArg arg) => throw UnsupportedError("");
 
-  Future<TResult> followReplacement(TArg arg);
+  Future<TResult> replace(TArg arg)  => throw UnsupportedError("");
 }

@@ -1,8 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../architecture/data/setting/setting.dart';
-import '../../../dart_utils/object_util.dart';
-import '../../model/log_in_info.dart';
+import '../../../dart_utils/iterable_extension.dart';
+import '../../models/log_in_info.dart';
 
 class LogInInfoSetting extends Setting<LogInInfo> {
 
@@ -19,7 +19,7 @@ class LogInInfoSetting extends Setting<LogInInfo> {
     final uid = prefs.getString(_UID_KEY);
     final phone = prefs.getString(_PHONE_KEY);
 
-    if (ObjectUtil.isAllNull([uid, phone])) {
+    if ([uid, phone].everyNull()) {
       return null;
     }
 

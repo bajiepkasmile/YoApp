@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'docunent_snapshot_map_function.dart';
+import 'document_snapshot_map_function.dart';
 import 'firestore_object.dart';
 
 class FirestoreQuery<TItem extends FirestoreObject> {
@@ -26,7 +26,7 @@ class FirestoreQuery<TItem extends FirestoreObject> {
         dynamic arrayContains,
         List<dynamic> arrayContainsAny,
         List<dynamic> whereIn,
-        bool isNull,
+        bool isNull
       }
       ) {
     final query = _query.where(

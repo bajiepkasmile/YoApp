@@ -1,32 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:phone_number/phone_number.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yo_app/app/presentation/views/chat_list/chat_list_route.dart';
+import 'package:yo_app/app/presentation/views/contact/contact_route.dart';
 
-import '../../../connectivity_utils/architecture/data/box/is_network_available_box.dart';
+import 'package:yo_app/app/presentation/views/contact_list/contact_list_route.dart';
+
+import '../../../connectivity_utils/architecture/data/emitter/on_connectivity_changed_emitter.dart';
+import '../../../connectivity_utils/architecture/data/func/is_network_available_func.dart';
 import '../../../flutter_utils/architecture/presentation/scope/app_scope.dart';
 import '../../../flutter_utils/architecture/presentation/scope/scope_bundle.dart';
 import '../../../architecture/presentation/view/view_model.dart';
-import '../../data/emitters/on_receive_message_emitter.dart';
-import '../../data/operations/tools/firestore/message/firestore_message_mapper.dart';
-import '../../data/operations/implementation/auth/verify_phone_operation.dart';
-import '../../data/operations/implementation/messages/get_remote_messages_operation.dart';
-import '../../data/operations/implementation/messages/send_message_operation.dart';
-import '../../data/operations/implementation/profiles/create_profile_operation.dart';
-import '../../data/repositories/self_profile_repository.dart';
-import '../../data/operations/implementation/auth/log_in_operation.dart';
-import '../../data/operations/implementation/profiles/get_remote_profile_operation.dart';
-import '../../data/operations/tools/firestore/firestore_entry.dart';
-import '../../data/operations/tools/firestore/profile/firestore_profile_mapper.dart';
-import '../../data/tasks/profiles/get_remote_self_profile_task.dart';
-import '../../data/tasks/profiles/create_self_profile_task.dart';
+import '../../data/funcs/requests/auth/verify_phone_request.dart';
+import '../../data/funcs/requests/profiles/create_profile_request.dart';
+import '../../data/funcs/requests/auth/log_in_request.dart';
+import '../../data/funcs/requests/profiles/get_profile_request.dart';
+import '../../data/repositories/profile_box.dart';
+import '../../tools/firestore/message/firestore_message_mapper.dart';
+import '../../tools/firestore/firestore_entry.dart';
+import '../../tools/firestore/profile/firestore_profile_mapper.dart';
+import '../../data/tasks/profiles/get_profile_task.dart';
+import '../../data/tasks/profiles/create_profile_task.dart';
 import '../../data/tasks/auth/log_in_task.dart';
-import '../../data/tasks/messages/get_remote_messages_task.dart';
-import '../../data/tasks/messages/send_message_task.dart';
-import '../../data/settings/self_profile_setting.dart';
+import '../../data/tasks/auth/log_out_task.dart';
+import '../../data/tasks/contacts/add_contact_task.dart';
+import '../../data/tasks/profiles/change_avatar_task.dart';
+import '../../data/settings/profile_setting.dart';
 import '../../data/settings/log_in_info_setting.dart';
-import '../views/log_in/log_in_route.dart';
-import '../views/profile_creator/profile_creator_route.dart';
+import '../../data/funcs/requests/auth/log_out_request.dart';
+import '../../data/repositories/contacts_box.dart';
+import '../../data/tasks/contacts/get_phone_contacts_task.dart';
+import '../views/splash/splash_route.dart';
+import '../utils/phone_formatter.dart';
 import 'reactions/on_init_reaction.dart';
 
 class YoAppScope extends AppScope<YoAppScope> {
@@ -35,94 +42,94 @@ class YoAppScope extends AppScope<YoAppScope> {
   Firestore firestore;
   Connectivity connectivity;
   Future<SharedPreferences> prefsFuture;
+  PhoneNumber phoneNumber;
 
-  SelfProfileRepository selfProfileRepository;
+  PhoneFormatter phoneFormatter;
 
-  SelfProfileSetting selfProfileSetting;
+  ProfileBox profileRepository;
+  ContactsBox contactsRepository;
+
+  ProfileSetting profileSetting;
   LogInInfoSetting logInInfoSetting;
 
-  IsNetworkAvailableBox isNetworkAvailableBox;
+  IsNetworkAvailableFunc isNetworkAvailableFunc;
 
   FirestoreEntry firestoreEntry;
   FirestoreProfileMapper firestoreProfileMapper;
   FirestoreMessageMapper firestoreMessageMapper;
 
-  OnReceiveMessageEmitter onReceiveMessageEmitter;
+  OnConnectivityChangedEmitter onConnectivityChangedEmitter;
 
-  VerifyPhoneOperation verifyPhoneOperation;
-  LogInOperation logInOperation;
-  CreateProfileOperation createProfileOperation;
-  GetRemoteProfileOperation getRemoteProfileOperation;
-  GetRemoteMessagesOperation getRemoteMessagesOperation;
-  SendMessageOperation sendMessageOperation;
+  VerifyPhoneRequest verifyPhoneRequest;
+  LogInRequest logInRequest;
+  CreateProfileRequest createProfileRequest;
+  GetProfileRequest getProfileRequest;
+  LogOutRequest logOutRequest;
 
   LogInTask logInTask;
-  CreateSelfProfileTask createSelfProfileTask;
-  GetRemoteSelfProfileTask getRemoteSelfProfileTask;
-  GetRemoteMessagesTask getRemoteMessagesTask;
-  SendMessageTask sendMessageTask;
+  CreateProfileTask createProfileTask;
+  GetProfileTask getProfileTask;
+  AddContactTask addContactTask;
+  ChangeAvatarTask changeAvatarTask;
+  GetPhoneContactsWithChatsTask getPhoneContactsWithChatsTask;
+  LogOutTask logOutTask;
 
-  LogInRoute logInRoute;
-  ProfileCreatorRoute profileCreatorRoute;
+  SplashRoute splashRoute;
 
   OnInitReaction onInitReaction;
 
-  YoAppScope(ScopeBundle<YoAppScope, void, void, ViewModel> bundle) : super(bundle) {
+  YoAppScope(ScopeBundle<YoAppScope, ViewModel, void, void> bundle) : super(bundle) {
     firebaseAuth = FirebaseAuth.instance;
     firestore = Firestore.instance;
     connectivity = Connectivity();
     prefsFuture = SharedPreferences.getInstance();
+    phoneNumber = PhoneNumber();
 
-    selfProfileRepository = SelfProfileRepository();
+    phoneFormatter = PhoneFormatter(phoneNumber);
 
-    selfProfileSetting = SelfProfileSetting(prefsFuture);
+    profileRepository = ProfileBox();
+    contactsRepository = ContactsBox();
+
+    profileSetting = ProfileSetting(prefsFuture);
     logInInfoSetting = LogInInfoSetting(prefsFuture);
 
-    isNetworkAvailableBox = IsNetworkAvailableBox(connectivity);
+    isNetworkAvailableFunc = IsNetworkAvailableFunc(connectivity);
 
     firestoreEntry = FirestoreEntry(firestore);
     firestoreProfileMapper = FirestoreProfileMapper();
-    firestoreMessageMapper = FirestoreMessageMapper(selfProfileRepository);
+    firestoreMessageMapper = FirestoreMessageMapper(profileRepository);
 
-    onReceiveMessageEmitter = OnReceiveMessageEmitter(firestoreEntry, firestoreMessageMapper, selfProfileRepository);
+    onConnectivityChangedEmitter = OnConnectivityChangedEmitter(connectivity);
 
-    verifyPhoneOperation = VerifyPhoneOperation(firebaseAuth);
-    logInOperation = LogInOperation(firebaseAuth);
-    createProfileOperation = CreateProfileOperation(firestoreEntry, firestoreProfileMapper);
-    getRemoteProfileOperation = GetRemoteProfileOperation(
+    verifyPhoneRequest = VerifyPhoneRequest(firebaseAuth);
+    logInRequest = LogInRequest(firebaseAuth);
+    createProfileRequest = CreateProfileRequest(firestoreEntry, firestoreProfileMapper);
+    getProfileRequest = GetProfileRequest(
         firestoreEntry,
         firestoreProfileMapper
     );
-    getRemoteMessagesOperation = GetRemoteMessagesOperation(firestoreEntry, firestoreMessageMapper);
-    sendMessageOperation = SendMessageOperation(firestoreEntry, firestoreMessageMapper);
 
-    logInTask = LogInTask(logInOperation, logInInfoSetting);
-    createSelfProfileTask = CreateSelfProfileTask(
-        createProfileOperation,
+    logInTask = LogInTask(logInRequest, logInInfoSetting);
+    createProfileTask = CreateProfileTask(
+        createProfileRequest,
         logInInfoSetting,
-        selfProfileSetting,
-        selfProfileRepository
+        profileSetting,
+        profileRepository
     );
-    getRemoteSelfProfileTask = GetRemoteSelfProfileTask(
-        getRemoteProfileOperation,
+    getProfileTask = GetProfileTask(
+        getProfileRequest,
         logInInfoSetting,
-        selfProfileSetting,
-        selfProfileRepository
+        profileSetting,
+        profileRepository
     );
-    getRemoteMessagesTask = GetRemoteMessagesTask(getRemoteMessagesOperation, selfProfileRepository);
-    sendMessageTask = SendMessageTask(sendMessageOperation, selfProfileRepository);
+    addContactTask = AddContactTask();
+    changeAvatarTask = ChangeAvatarTask();
+    getPhoneContactsWithChatsTask = GetPhoneContactsWithChatsTask();
+    logOutTask = LogOutTask(logOutRequest, profileSetting, logInInfoSetting);
 
-    logInRoute = LogInRoute(context, this, screenContainer);
-    profileCreatorRoute = ProfileCreatorRoute(context, this, screenContainer);
+    splashRoute = SplashRoute(this, queueTarget);
 
-    onInitReaction = OnInitReaction(
-        selfProfileRepository,
-        selfProfileSetting,
-        logInInfoSetting,
-        isNetworkAvailableBox,
-        getRemoteSelfProfileTask,
-        logInRoute,
-        profileCreatorRoute
-    );
+    final s = ContactRoute(this, queueTarget);
+    onInitReaction = OnInitReaction(s);
   }
 }

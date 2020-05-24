@@ -1,12 +1,14 @@
 import '../../../../architecture/presentation/view/view_model.dart';
-import '../navigation/widget_container.dart';
+import '../navigation/targets/queue/queue_target.dart';
 import 'widget_scope.dart';
 import 'scope_bundle.dart';
 
-class AppScope<TSelf extends WidgetScope<TSelf, void, void, ViewModel>>
-    extends WidgetScope<TSelf, void, void, ViewModel> {
+class AppScope<TSelf extends WidgetScope<TSelf, ViewModel, void, void>>
+    extends WidgetScope<TSelf, ViewModel, void, void> {
 
-  WidgetContainer screenContainer = WidgetContainer();
+  QueueTarget queueTarget;
 
-  AppScope(ScopeBundle<TSelf, void, void, ViewModel> bundle) : super(bundle);
+  AppScope(ScopeBundle<TSelf, ViewModel, void, void> bundle) : super(bundle) {
+    queueTarget = QueueTarget();
+  }
 }

@@ -1,23 +1,26 @@
 import 'package:flutter/widgets.dart';
 
+import '../../../../flutter_utils/architecture/presentation/navigation/targets/navigator/navigator_target.dart';
 import '../../../../architecture/presentation/navigation/route_trace.dart';
 import '../../../../architecture/presentation/scope/scope.dart';
 import '../../../../architecture/presentation/view/view_model.dart';
 import 'scope_bundle.dart';
 
-abstract class WidgetScope<TAppScope extends Scope, TArg, TResult, TViewModel extends ViewModel> extends Scope {
+abstract class WidgetScope<TAppScope extends Scope, TViewModel extends ViewModel, TArg, TResult> extends Scope {
 
   final BuildContext context;
-  final TViewModel viewModel;
   final TAppScope appScope;
+  final TViewModel model;
   final TArg arg;
   final RouteTrace<TResult> trace;
+  final NavigatorTarget navigatorTarget;
 
-  WidgetScope(ScopeBundle<TAppScope, TArg, TResult, TViewModel> bundle) :
+  WidgetScope(ScopeBundle<TAppScope, TViewModel, TArg, TResult> bundle) :
         context = bundle.context,
-        viewModel = bundle.viewModel,
         appScope = bundle.routeBundle.appScope,
+        model = bundle.viewModel,
         arg = bundle.routeBundle.arg,
-        trace = bundle.routeBundle.trace
+        trace = bundle.routeBundle.trace,
+        navigatorTarget = NavigatorTarget(bundle.context)
   ;
 }

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'docunent_snapshot_map_function.dart';
+import 'document_snapshot_map_function.dart';
 import 'firestore_object.dart';
 import 'firestore_query.dart';
 

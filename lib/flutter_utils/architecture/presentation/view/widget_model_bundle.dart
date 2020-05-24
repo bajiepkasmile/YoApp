@@ -1,9 +1,9 @@
-import 'view_state.dart';
+import 'widget_state.dart';
 
 class WidgetModelBundle<TArg> {
 
   final TArg arg;
-  final ViewState viewState;
+  final WidgetState viewState;
 
   WidgetModelBundle(this.arg, this.viewState);
 }
