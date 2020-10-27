@@ -1,21 +1,30 @@
 name: yo_app
+
 description: A new Flutter project.
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  architecture:
+    path: ./architecture
+  connectivity_utils:
+    path: ./connectivity_utils
+  dart_utils:
+    path: ./dart_utils
+  firestore_utils:
+    path: ./firestore_utils
+  flutter_utils:
+    path: ./flutter_utils
   shared_preferences: ^0.5.4+5
   floor: ^0.12.0
-  connectivity: ^0.4.6+1
+  path_provider: ^1.6.9
   firebase_auth: ^0.15.3
   firebase_storage: ^3.1.5
-  cloud_firestore: ^0.13.0+1
-  flutter_cache_manager: ^1.2.2
   phone_number: ^0.6.0+2
   share: ^0.6.4
   url_launcher: ^5.4.5
